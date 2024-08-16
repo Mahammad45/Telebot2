@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import telebot
 from telebot import types
 
-from core.settings import TOKEN, PGCONNECTION
+from core.setting import TOKEN, PGCONNECTION
 
 
 logging.basicConfig(
