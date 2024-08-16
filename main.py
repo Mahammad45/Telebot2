@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 import telebot
 from telebot import types
 
-from core.settings import TOKEN, PGCONNECTION
+from core.settings import TOKEN, PGCONN
 
 
 logging.basicConfig(
@@ -24,6 +24,10 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 bot = telebot.TeleBot(TOKEN)
 
+
+@bot.message_handler(commands=['start'])
+def start(message: types.Message):
+    bot.send_message(message.chat.id, "Hello, I'm a bot!")
 
 
 if __name__ == "__main__":
