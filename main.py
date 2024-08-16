@@ -43,17 +43,17 @@ def create_user_table():
 
 
 
-def insert_user(message:types.Message):
+def insert_user(message: types.Message):
     with PGCONN.cursor() as cursor:
         cursor.execute("""
-            INSERT INTO reg_users (user_id, username, first_name, last_name, user.phone)
+            INSERT INTO reg_users (user_id, username, first_name, last_name, phone)
             VALUES (%s, %s, %s, %s, %s)
-        """, (message.from_user.id,message.from_user.username
+        """, (message.from_user.id, message.from_user.username, 
               message.from_user.first_name, message.from_user.last_name,
-              message.contact.phone_number
-              ))
+              message.contact.phone_number))
         PGCONN.commit()
-        logger.info(f"User {message.from_user.id} inserted successfully.")
+        logger.info(f"User {message.from_user.id} inserted successfully")
+
 
 @bot.message_handler(commands=['start'])
 def start(message: types.Message):
