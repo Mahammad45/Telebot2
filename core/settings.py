@@ -2,7 +2,7 @@ import psycopg2
 
 from configparser import ConfigParser
 
-CONFIG = ConfigParser
+CONFIG = ConfigParser()
 CONFIG.read('config.ini')
 
 TOKEN = CONFIG.get('telegram','TOKEN')

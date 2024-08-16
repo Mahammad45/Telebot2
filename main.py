@@ -12,7 +12,6 @@ from telebot import types
 from core.settings import TOKEN, PGCONN
 
 
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -72,26 +71,22 @@ def start(message: types.Message):
         bot.send_message(message.chat.id, "Пожалуйста, пройдите регистрацию", reply_markup=markup)
 
     else:
-        bot.send_message(message.chat.id, "Привет!",reply_markup=types.ReplyKeyboardRemove())
-        
+        bot.send_message(message.chat.id, "Привет!", reply_markup=types.ReplyKeyboardRemove())
+
 
 @bot.message_handler(content_types=['contact'])
 def handle_contact(message: types.Message):
     if check_user(message.from_user) is None:
         insert_user(message)
-        bot.send_message(message.chat.id, "Спасибо за регистрацию!")
+        bot.send_message(message.chat.id, "Спасибо за регистрацию!", reply_markup=types.ReplyKeyboardRemove())
     else:
-        bot.send_message(message.chat.id, "Вы уже зарегистрированы!")
+        bot.send_message(message.chat.id, "Вы уже зарегистрированы!", reply_markup=types.ReplyKeyboardRemove())
 
-
-        
 
 if __name__ == "__main__":
     try:
-        
+        create_user_tables()
         logger.info("Starting the application...")
         bot.polling(none_stop=True)
     except Exception as e:
         logger.error(f"An error occurred: {e}")
-
-
