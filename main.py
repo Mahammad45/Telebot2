@@ -72,14 +72,26 @@ def start(message: types.Message):
         bot.send_message(message.chat.id, "Пожалуйста, пройдите регистрацию", reply_markup=markup)
 
     else:
-        bot.send_message(message.chat.id, "Привет!")
+        bot.send_message(message.chat.id, "Привет!",reply_markup=types.ReplyKeyboardRemove())
         
 
+@bot.message_handler(content_types=['contact'])
+def handle_contact(message: types.Message):
+    if check_user(message.from_user) is None:
+        insert_user(message)
+        bot.send_message(message.chat.id, "Спасибо за регистрацию!")
+    else:
+        bot.send_message(message.chat.id, "Вы уже зарегистрированы!")
+
+
+        
 
 if __name__ == "__main__":
     try:
         
         logger.info("Starting the application...")
-        bot.infinity_polling()
+        bot.polling(none_stop=True)
     except Exception as e:
         logger.error(f"An error occurred: {e}")
+
+
