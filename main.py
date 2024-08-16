@@ -55,6 +55,15 @@ def insert_user(message: types.Message):
         logger.info(f"User {message.from_user.id} inserted successfully")
 
 
+
+
+def check_user(user: types.User):
+    with PGCONN.cursor() as cursor:
+        cursor.execute(f"SELECT * FROM reg_users WHERE user_id = {user.id}")
+        result = cursor.fetchone()
+        return result if result else None
+
+
 @bot.message_handler(commands=['start'])
 def start(message: types.Message):
     bot.send_message(message.chat.id, "Hello, I'm a bot!")
